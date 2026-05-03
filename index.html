@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabbir's Transformation Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #1a1a1a;
+    --border: rgba(255,255,255,0.07);
+    --accent: #c8f542;
+    --accent2: #f5a623;
+    --text: #f0ede6;
+    --muted: #888;
+    --red: #ff4d4d;
+    --blue: #4da6ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,245,66,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(245,166,35,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 12vw, 160px);
+    line-height: 0.9;
+    letter-spacing: -1px;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.4s forwards;
+  }
+  .hero-title span { color: var(--accent); }
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.6s forwards;
+  }
+  .hero-stat { border-left: 2px solid var(--accent); padding-left: 1rem; }
+  .hero-stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--accent2); }
+  .hero-stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .hero-nav {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.6s 0.8s forwards;
+  }
+  .nav-btn {
+    padding: 10px 22px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .nav-btn:hover, .nav-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase;
+    animation: bounce 2s infinite;
+    opacity: 0; animation: fadeIn 1s 1.5s forwards, bounce 2s 2.5s infinite;
+  }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 3px; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1; margin-bottom: 2.5rem;
+    letter-spacing: 1px;
+  }
+  .divider { width: 100%; height: 1px; background: var(--border); margin: 0; }
+
+  /* WEEK GRID */
+  .week-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .day-card {
+    background: var(--surface);
+    padding: 1.5rem;
+    transition: background 0.2s;
+    cursor: pointer;
+    position: relative;
+  }
+  .day-card:hover { background: var(--surface2); }
+  .day-card.rest-day { opacity: 0.5; }
+  .day-card.active-day { background: var(--surface2); }
+  .day-card.active-day::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+  }
+  .day-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px; line-height: 1;
+    color: var(--border);
+    margin-bottom: 0.5rem;
+    transition: color 0.2s;
+  }
+  .day-card:hover .day-num, .day-card.active-day .day-num { color: var(--accent); }
+  .day-name { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 0.25rem; }
+  .day-focus { font-size: 16px; font-weight: 600; margin-bottom: 0.75rem; }
+  .day-tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 2px; font-family: 'DM Mono', monospace; letter-spacing: 1px; text-transform: uppercase; }
+  .tag-strength { background: rgba(77,166,255,0.15); color: var(--blue); }
+  .tag-cardio { background: rgba(200,245,66,0.15); color: var(--accent); }
+  .tag-hiit { background: rgba(245,166,35,0.15); color: var(--accent2); }
+  .tag-rest { background: rgba(136,136,136,0.15); color: var(--muted); }
+
+  /* EXERCISE DETAIL */
+  .exercise-detail {
+    margin-top: 2.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    display: none;
+  }
+  .exercise-detail.visible { display: block; animation: slideDown 0.3s ease; }
+  .ex-detail-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .ex-detail-title { font-family: 'Bebas Neue', sans-serif; font-size: 36px; }
+  .ex-list { list-style: none; }
+  .ex-item {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .ex-item:hover { background: var(--surface2); }
+  .ex-item:last-child { border-bottom: none; }
+  .ex-item-name { font-weight: 500; }
+  .ex-item-note { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .ex-sets { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); white-space: nowrap; }
+  .ex-type { font-size: 10px; font-family: 'DM Mono', monospace; padding: 2px 7px; border-radius: 2px; }
+  .type-strength { background: rgba(77,166,255,0.12); color: var(--blue); }
+  .type-cardio { background: rgba(200,245,66,0.12); color: var(--accent); }
+  .type-core { background: rgba(245,166,35,0.12); color: var(--accent2); }
+  .tip-strip {
+    background: rgba(200,245,66,0.06);
+    border-top: 1px solid rgba(200,245,66,0.15);
+    padding: 1rem 2rem;
+    font-size: 13px;
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* NUTRITION */
+  .nutrition-targets { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 2.5rem; }
+  .target-card { background: var(--surface); padding: 1.5rem; }
+  .target-val { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: var(--accent); line-height: 1; }
+  .target-unit { font-size: 13px; color: var(--accent2); margin-bottom: 0.25rem; }
+  .target-label { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 1px; text-transform: uppercase; }
+  .meals { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .meal-row {
+    background: var(--surface);
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    align-items: start;
+    transition: background 0.15s;
+  }
+  .meal-row:hover { background: var(--surface2); }
+  .meal-time-col { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 1px; padding-top: 2px; }
+  .meal-name-col { font-weight: 600; margin-bottom: 4px; }
+  .meal-items-col { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .meal-kcal { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent2); white-space: nowrap; padding-top: 2px; text-align: right; }
+
+  /* RULES */
+  .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .rule-card { background: var(--surface); padding: 1.75rem; transition: background 0.2s; }
+  .rule-card:hover { background: var(--surface2); }
+  .rule-num { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: var(--border); line-height: 1; margin-bottom: 0.5rem; }
+  .rule-title { font-size: 15px; font-weight: 600; margin-bottom: 0.5rem; }
+  .rule-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* TIMELINE */
+  .timeline { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .timeline-row {
+    background: var(--surface);
+    padding: 1.5rem 2rem;
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .tl-month { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--muted); }
+  .tl-bar-wrap { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .tl-bar { height: 100%; border-radius: 3px; transition: width 1s ease; }
+  .tl-kg { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); white-space: nowrap; text-align: right; }
+  .tl-desc { font-size: 12px; color: var(--muted); margin-top: 0.5rem; }
+
+  /* CARDIO SECTION */
+  .cardio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 2rem; }
+  .cardio-card { background: var(--surface); padding: 1.5rem; transition: background 0.2s; }
+  .cardio-card:hover { background: var(--surface2); }
+  .cardio-icon { font-size: 28px; margin-bottom: 0.75rem; }
+  .cardio-name { font-weight: 600; font-size: 16px; margin-bottom: 0.25rem; }
+  .cardio-sub { font-size: 11px; color: var(--accent); font-family: 'DM Mono', monospace; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .cardio-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--border); }
+  footer p { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 1px; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media(max-width: 600px) {
+    .meal-row { grid-template-columns: 1fr; gap: 0.25rem; }
+    .timeline-row { grid-template-columns: 80px 1fr; }
+    .tl-kg { display: none; }
+    .ex-item { grid-template-columns: 1fr auto; }
+    .ex-type { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div style="max-width:1100px; margin:0 auto; width:100%;">
+    <p class="hero-label">Sabbir's 16-Week Transformation Plan</p>
+    <h1 class="hero-title">105 KG<br>→ <span>UNDER</span><br><span>90 KG</span></h1>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-val">15 KG</div>
+        <div class="hero-stat-label">Fat to lose</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">6 DAYS</div>
+        <div class="hero-stat-label">Per week</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">16 YRS</div>
+        <div class="hero-stat-label">Age — peak hormones</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">4 MOS</div>
+        <div class="hero-stat-label">Target timeline</div>
+      </div>
+    </div>
+    <div class="hero-nav">
+      <a href="#workout" class="nav-btn">Workout</a>
+      <a href="#cardio" class="nav-btn">Cardio</a>
+      <a href="#nutrition" class="nav-btn">Nutrition</a>
+      <a href="#rules" class="nav-btn">Rules</a>
+      <a href="#timeline" class="nav-btn">Timeline</a>
+    </div>
+  </div>
+  <div class="scroll-hint">↓ scroll</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- WORKOUT -->
+<section id="workout">
+  <p class="section-label">Weekly Split</p>
+  <h2 class="section-title">THE PROGRAM</h2>
+
+  <div class="week-grid fade-in">
+    <div class="day-card" onclick="showDay('mon')">
+      <div class="day-num">01</div>
+      <div class="day-name">Monday</div>
+      <div class="day-focus">Chest + Triceps</div>
+      <span class="day-tag tag-strength">Strength</span>
+    </div>
+    <div class="day-card" onclick="showDay('tue')">
+      <div class="day-num">02</div>
+      <div class="day-name">Tuesday</div>
+      <div class="day-focus">Back + Biceps</div>
+      <span class="day-tag tag-strength">Strength</span>
+    </div>
+    <div class="day-card" onclick="showDay('wed')">
+      <div class="day-num">03</div>
+      <div class="day-name">Wednesday</div>
+      <div class="day-focus">HIIT + Abs</div>
+      <span class="day-tag tag-hiit">HIIT Cardio</span>
+    </div>
+    <div class="day-card" onclick="showDay('thu')">
+      <div class="day-num">04</div>
+      <div class="day-name">Thursday</div>
+      <div class="day-focus">Shoulders + Core</div>
+      <span class="day-tag tag-strength">Strength</span>
+    </div>
+    <div class="day-card rest-day">
+      <div class="day-num">05</div>
+      <div class="day-name">Friday</div>
+      <div class="day-focus">Rest Day</div>
+      <span class="day-tag tag-rest">Recovery</span>
+    </div>
+    <div class="day-card" onclick="showDay('sat')">
+      <div class="day-num">06</div>
+      <div class="day-name">Saturday</div>
+      <div class="day-focus">Legs (No Deadlift)</div>
+      <span class="day-tag tag-strength">Strength</span>
+    </div>
+    <div class="day-card" onclick="showDay('sun')">
+      <div class="day-num">07</div>
+      <div class="day-name">Sunday</div>
+      <div class="day-focus">Steady Cardio + Abs</div>
+      <span class="day-tag tag-cardio">Cardio</span>
+    </div>
+  </div>
+
+  <div class="exercise-detail" id="ex-detail">
+    <div class="ex-detail-header">
+      <div>
+        <div id="ex-day-label" style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;"></div>
+        <div class="ex-detail-title" id="ex-day-title"></div>
+      </div>
+      <span id="ex-day-tag" class="day-tag"></span>
+    </div>
+    <ul class="ex-list" id="ex-list"></ul>
+    <div class="tip-strip" id="ex-tip"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CARDIO -->
+<section id="cardio">
+  <p class="section-label">Fat Loss Engine</p>
+  <h2 class="section-title">CARDIO METHODS</h2>
+
+  <div class="cardio-grid fade-in">
+    <div class="cardio-card">
+      <div class="cardio-icon">🏃</div>
+      <div class="cardio-name">Treadmill — HIIT</div>
+      <div class="cardio-sub">Wednesday main session</div>
+      <div class="cardio-desc">5 min easy walk warm-up → 8 rounds of (30s sprint at 80% max speed / 90s slow walk) → 5 min easy cooldown. Total ~25 min. Burns fat for hours after.</div>
+    </div>
+    <div class="cardio-card">
+      <div class="cardio-icon">🚶</div>
+      <div class="cardio-name">Treadmill — Incline Walk</div>
+      <div class="cardio-sub">Sunday steady session</div>
+      <div class="cardio-desc">Set incline to 8–12%, speed 5–6 km/h. Walk for 30–40 min steady. Incline walking burns almost as many calories as running with zero joint impact — perfect for 105 kg bodyweight.</div>
+    </div>
+    <div class="cardio-card">
+      <div class="cardio-icon">⚡</div>
+      <div class="cardio-name">Cross Trainer</div>
+      <div class="cardio-sub">Warm-up every strength day</div>
+      <div class="cardio-desc">10 min steady pace before every strength session. Gets your heart rate up, warms your joints safely. Set resistance to moderate — you should be slightly breathless but able to talk.</div>
+    </div>
+    <div class="cardio-card">
+      <div class="cardio-icon">🔥</div>
+      <div class="cardio-name">Jumping Jacks</div>
+      <div class="cardio-sub">No machine needed</div>
+      <div class="cardio-desc">3 sets × 50 reps between strength sets to keep heart rate elevated. Burns extra calories without adding recovery time. Also works as a finisher after any session.</div>
+    </div>
+    <div class="cardio-card">
+      <div class="cardio-icon">💪</div>
+      <div class="cardio-name">Burpees</div>
+      <div class="cardio-sub">No machine — high intensity</div>
+      <div class="cardio-desc">Add 3 × 10 burpees at the end of Wednesday HIIT or Saturday leg day. Full body explosive movement — one of the highest calorie-burn exercises per minute. Start slow, build up.</div>
+    </div>
+    <div class="cardio-card">
+      <div class="cardio-icon">🏋️</div>
+      <div class="cardio-name">Mountain Climbers</div>
+      <div class="cardio-sub">No machine — core + cardio</div>
+      <div class="cardio-desc">3 × 30 seconds as a core finisher. Drive knees to chest rapidly in a plank position. Combines cardio with ab work — hits lower abs which are stubborn at high body fat.</div>
+    </div>
+    <div class="cardio-card">
+      <div class="cardio-icon">🦘</div>
+      <div class="cardio-name">Jump Rope Simulation</div>
+      <div class="cardio-sub">No machine — anywhere</div>
+      <div class="cardio-desc">Even without a rope, jump rope motion (small hops, wrist rotation) burns ~10 cal/min. 3 × 1 min rounds between sets. Low impact once you get the rhythm — great for Wednesday HIIT warmup.</div>
+    </div>
+    <div class="cardio-card">
+      <div class="cardio-icon">🧘</div>
+      <div class="cardio-name">High Knees</div>
+      <div class="cardio-sub">No machine — warm-up option</div>
+      <div class="cardio-desc">30 seconds of driving knees up to hip height rapidly. Use as an alternative warm-up if cross trainer is busy. Also great as active rest between sets to keep calorie burn high.</div>
+    </div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid rgba(200,245,66,0.2);border-radius:6px;padding:1.5rem 2rem;">
+    <p style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:0.5rem;">Pro tip</p>
+    <p style="font-size:14px;color:var(--muted);line-height:1.7;">As a beginner at 105 kg — <strong style="color:var(--text);">incline treadmill walking is your best friend.</strong> Running puts 3× your bodyweight on joints. Incline walking gives you 80% of the calorie burn with none of the joint stress. Increase incline every 2 weeks as you get lighter and fitter.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- NUTRITION -->
+<section id="nutrition">
+  <p class="section-label">Fuel Protocol</p>
+  <h2 class="section-title">NUTRITION</h2>
+
+  <div class="nutrition-targets fade-in">
+    <div class="target-card">
+      <div class="target-val">1900</div>
+      <div class="target-unit">kcal/day</div>
+      <div class="target-label">Daily calories</div>
+    </div>
+    <div class="target-card">
+      <div class="target-val">130g</div>
+      <div class="target-unit">protein/day</div>
+      <div class="target-label">Muscle building</div>
+    </div>
+    <div class="target-card">
+      <div class="target-val">3.5L</div>
+      <div class="target-unit">water/day</div>
+      <div class="target-label">Minimum intake</div>
+    </div>
+    <div class="target-card">
+      <div class="target-val">~500</div>
+      <div class="target-unit">kcal deficit</div>
+      <div class="target-label">Below maintenance</div>
+    </div>
+  </div>
+
+  <div class="meals fade-in">
+    <div class="meal-row">
+      <div class="meal-time-col">7:00 AM<br>Breakfast</div>
+      <div>
+        <div class="meal-name-col">2 Eggs + Upgrade</div>
+        <div class="meal-items-col">✓ Keep your 2 whole eggs (boil or scramble — no oil)<br>+ 1 cup milk or 100g yogurt · + 2 whole wheat bread or 1 cup oats · + 1 banana</div>
+      </div>
+      <div class="meal-kcal">~450 kcal<br>~25g protein</div>
+    </div>
+    <div class="meal-row">
+      <div class="meal-time-col">11:00 AM<br>Snack</div>
+      <div>
+        <div class="meal-name-col">Protein Snack</div>
+        <div class="meal-items-col">1 boiled egg + handful peanuts or roasted chickpeas<br>OR 1 cup milk + 1 fruit</div>
+      </div>
+      <div class="meal-kcal">~200 kcal<br>~12g protein</div>
+    </div>
+    <div class="meal-row">
+      <div class="meal-time-col">1:00 PM<br>Lunch</div>
+      <div>
+        <div class="meal-name-col">Spiced Chicken (Your Recipe — Upgraded)</div>
+        <div class="meal-items-col">✓ Keep 3pc boiled chicken + your garlic ginger pepper spices<br>⚠ Reduce mustard oil to 1 tsp only (saves ~200 kcal)<br>+ 1 cup cooked rice or 2 rotis · + big portion vegetables/salad</div>
+      </div>
+      <div class="meal-kcal">~550 kcal<br>~45g protein</div>
+    </div>
+    <div class="meal-row">
+      <div class="meal-time-col">4:30 PM<br>Pre-Workout</div>
+      <div>
+        <div class="meal-name-col">Energy Before Gym</div>
+        <div class="meal-items-col">1 banana + 1 boiled egg — eat 45–60 min before training<br>OR 1 cup oats with milk</div>
+      </div>
+      <div class="meal-kcal">~200 kcal<br>~8g protein</div>
+    </div>
+    <div class="meal-row">
+      <div class="meal-time-col">8:00 PM<br>Dinner</div>
+      <div>
+        <div class="meal-name-col">High Protein, Light Carb</div>
+        <div class="meal-items-col">150–200g fish (rui, hilsa, pangaash) or 2 more chicken pieces<br>+ 1 cup lentil dal · + vegetables (unlimited) · + ½ cup rice only</div>
+      </div>
+      <div class="meal-kcal">~500 kcal<br>~40g protein</div>
+    </div>
+  </div>
+
+  <div style="margin-top:1rem;padding:1rem 1.5rem;background:rgba(255,77,77,0.06);border:1px solid rgba(255,77,77,0.15);border-radius:6px;font-size:13px;color:#ff8080;">
+    <strong>Avoid completely:</strong> Soft drinks, chips, fast food, white sugar, fried snacks, biscuits. These alone can erase a full gym session's worth of calorie burn.
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RULES -->
+<section id="rules">
+  <p class="section-label">Non-Negotiables</p>
+  <h2 class="section-title">THE RULES</h2>
+
+  <div class="rules-grid fade-in">
+    <div class="rule-card">
+      <div class="rule-num">01</div>
+      <div class="rule-title">Progressive overload every week</div>
+      <div class="rule-desc">Add slightly more weight or 1 extra rep every 1–2 weeks. Your muscles only grow when challenged more than last time. Write your weights in a notebook every session.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">02</div>
+      <div class="rule-title">Form before weight — always</div>
+      <div class="rule-desc">At 16, your joints and tendons are still developing. Use a weight you can control for all reps with full range of motion. Bad form with heavy weight equals injury, not muscle.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">03</div>
+      <div class="rule-title">Sleep 8–9 hours minimum</div>
+      <div class="rule-desc">Growth hormone peaks during deep sleep at your age. You literally build muscle and burn fat while sleeping. Under 7 hours will destroy results no matter how hard you train.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">04</div>
+      <div class="rule-title">No deadlift or bench press</div>
+      <div class="rule-desc">Your spine is still maturing. Leg press, goblet squats, machine chest press and cable work give 90% of the same benefit with far lower injury risk at your age and weight.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">05</div>
+      <div class="rule-title">Protein at every single meal</div>
+      <div class="rule-desc">Muscle is built from protein. Under 110g daily and you'll lose muscle while losing fat — called skinny fat. Eggs, chicken, fish, milk, dal are your best budget sources.</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">06</div>
+      <div class="rule-title">Weigh yourself once a week only</div>
+      <div class="rule-desc">Every Sunday morning, before eating, same conditions. Daily weighing is misleading due to water fluctuation. Track the weekly trend, not the daily number.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <p class="section-label">Progress Projection</p>
+  <h2 class="section-title">GOAL TIMELINE</h2>
+
+  <div class="timeline fade-in">
+    <div class="timeline-row">
+      <div>
+        <div class="tl-month">START</div>
+        <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;">Week 0</div>
+      </div>
+      <div>
+        <div class="tl-bar-wrap"><div class="tl-bar" style="width:100%;background:#ff4d4d;"></div></div>
+        <div class="tl-desc">Begin diet + training. First 2 weeks mostly water weight loss.</div>
+      </div>
+      <div class="tl-kg">105 kg</div>
+    </div>
+    <div class="timeline-row">
+      <div>
+        <div class="tl-month">MONTH 1</div>
+        <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;">Adaptation</div>
+      </div>
+      <div>
+        <div class="tl-bar-wrap"><div class="tl-bar" style="width:91%;background:#f5a623;"></div></div>
+        <div class="tl-desc">Body adapts to training. Strength increases fast. Fat loss begins. Expect 4–6 kg loss.</div>
+      </div>
+      <div class="tl-kg">~99–101 kg</div>
+    </div>
+    <div class="timeline-row">
+      <div>
+        <div class="tl-month">MONTH 2</div>
+        <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;">Fat burning</div>
+      </div>
+      <div>
+        <div class="tl-bar-wrap"><div class="tl-bar" style="width:83%;background:#a8d428;"></div></div>
+        <div class="tl-desc">Metabolism adjusted, cardio capacity improves, visible changes begin. Expect 5–7 kg loss.</div>
+      </div>
+      <div class="tl-kg">~93–96 kg</div>
+    </div>
+    <div class="timeline-row">
+      <div>
+        <div class="tl-month">MONTH 3</div>
+        <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;">Recomp</div>
+      </div>
+      <div>
+        <div class="tl-bar-wrap"><div class="tl-bar" style="width:76%;background:#c8f542;"></div></div>
+        <div class="tl-desc">Losing fat, building visible muscle simultaneously. Scale slows, body looks leaner. 4–5 kg loss.</div>
+      </div>
+      <div class="tl-kg">~89–92 kg</div>
+    </div>
+    <div class="timeline-row">
+      <div>
+        <div class="tl-month">MONTH 4</div>
+        <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;">Goal ✓</div>
+      </div>
+      <div>
+        <div class="tl-bar-wrap"><div class="tl-bar" style="width:70%;background:#c8f542;"></div></div>
+        <div class="tl-desc">Target reached. Body is leaner, stronger, more muscular. Maintain and push further.</div>
+      </div>
+      <div class="tl-kg" style="color:var(--accent);">≤ 88 kg ✓</div>
+    </div>
+  </div>
+
+  <div style="margin-top:1.5rem;padding:1.5rem 2rem;background:rgba(200,245,66,0.05);border:1px solid rgba(200,245,66,0.15);border-radius:6px;">
+    <p style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:0.5rem;">Your biggest advantage</p>
+    <p style="font-size:14px;color:var(--muted);line-height:1.7;">At 16, your testosterone and growth hormone are at the highest they'll ever be in your life. Your body responds to training faster than any adult. Stay consistent for 4 months and the results will be dramatic.</p>
+  </div>
+</section>
+
+<footer>
+  <p>SABBIR'S TRANSFORMATION PLAN · 105 KG → UNDER 90 KG · 2025</p>
+</footer>
+
+<script>
+const days = {
+  mon: {
+    label: 'Monday', title: 'Chest + Triceps', tag: 'Strength', tagClass: 'tag-strength',
+    exercises: [
+      { name: 'Cross trainer warm-up', note: 'Moderate pace', sets: '10 min', type: 'type-cardio' },
+      { name: 'Machine chest press', note: 'Full range of motion, controlled', sets: '3 × 12', type: 'type-strength' },
+      { name: 'Incline dumbbell press', note: '45° incline, squeeze at top', sets: '3 × 12', type: 'type-strength' },
+      { name: 'Cable chest fly', note: 'Arms slightly bent, wide arc', sets: '3 × 15', type: 'type-strength' },
+      { name: 'Tricep pushdown (cable)', note: 'Elbows pinned to sides', sets: '3 × 15', type: 'type-strength' },
+      { name: 'Overhead tricep extension', note: 'Dumbbell or cable, full extension', sets: '3 × 12', type: 'type-strength' },
+      { name: 'Cross trainer cooldown', note: 'Easy pace', sets: '10 min', type: 'type-cardio' },
+    ],
+    tip: '⚡ Rest 60–90 sec between sets. Focus on feeling the muscle squeeze, not just moving weight.'
+  },
+  tue: {
+    label: 'Tuesday', title: 'Back + Biceps', tag: 'Strength', tagClass: 'tag-strength',
+    exercises: [
+      { name: 'Cross trainer warm-up', note: 'Moderate pace', sets: '10 min', type: 'type-cardio' },
+      { name: 'Lat pulldown (wide grip)', note: 'Pull to upper chest, lean back slightly', sets: '3 × 12', type: 'type-strength' },
+      { name: 'Seated cable row', note: 'Squeeze shoulder blades together', sets: '3 × 12', type: 'type-strength' },
+      { name: 'Dumbbell single-arm row', note: 'Knee on bench, full range', sets: '3 × 12 each', type: 'type-strength' },
+      { name: 'Face pulls (cable)', note: 'Rope attachment, pull to forehead', sets: '3 × 15', type: 'type-strength' },
+      { name: 'Dumbbell bicep curl', note: 'Supinate wrist at top', sets: '3 × 15', type: 'type-strength' },
+      { name: 'Hammer curl', note: 'Neutral grip, controlled descent', sets: '3 × 12', type: 'type-strength' },
+    ],
+    tip: '⚡ Back is hard to feel for beginners. Focus on pulling with your elbows, not your hands.'
+  },
+  wed: {
+    label: 'Wednesday', title: 'HIIT Cardio + Abs', tag: 'HIIT', tagClass: 'tag-hiit',
+    exercises: [
+      { name: 'Treadmill easy walk', note: '5 km/h warm-up', sets: '5 min', type: 'type-cardio' },
+      { name: 'HIIT Treadmill sprints', note: '30s at 80% max / 90s slow walk — repeat', sets: '× 8 rounds', type: 'type-cardio' },
+      { name: 'Incline treadmill walk', note: '8–10% incline, steady', sets: '10 min', type: 'type-cardio' },
+      { name: 'Burpees', note: 'Full body, explosive', sets: '3 × 10', type: 'type-cardio' },
+      { name: 'Plank hold', note: 'Straight body, squeeze core', sets: '3 × 30s', type: 'type-core' },
+      { name: 'Lying leg raises', note: 'Slow and controlled', sets: '3 × 15', type: 'type-core' },
+      { name: 'Crunches', note: 'Exhale at top', sets: '3 × 20', type: 'type-core' },
+      { name: 'Mountain climbers', note: 'Drive knees fast', sets: '3 × 30s', type: 'type-core' },
+    ],
+    tip: '🔥 This is your main fat-burn session. Go hard on the sprints. Adjust treadmill speed up as you get fitter.'
+  },
+  thu: {
+    label: 'Thursday', title: 'Shoulders + Core', tag: 'Strength', tagClass: 'tag-strength',
+    exercises: [
+      { name: 'Cross trainer warm-up', note: 'Moderate pace', sets: '10 min', type: 'type-cardio' },
+      { name: 'Dumbbell shoulder press', note: 'Seated or standing, control descent', sets: '3 × 12', type: 'type-strength' },
+      { name: 'Lateral raises', note: 'Slight bend in elbow, lead with elbows', sets: '4 × 15', type: 'type-strength' },
+      { name: 'Front raises', note: 'Alternate arms, controlled', sets: '3 × 12', type: 'type-strength' },
+      { name: 'Cable upright row', note: 'Elbows above wrists', sets: '3 × 12', type: 'type-strength' },
+      { name: 'Plank', note: 'Hold solid, breathe', sets: '3 × 45s', type: 'type-core' },
+      { name: 'Russian twists', note: 'Feet off floor for extra challenge', sets: '3 × 20', type: 'type-core' },
+      { name: 'High knees', note: 'Drive knees to hip height rapidly', sets: '3 × 30s', type: 'type-cardio' },
+    ],
+    tip: '⚡ Lateral raises are the key to wide shoulders. Use lighter weight and higher reps — feel the burn.'
+  },
+  sat: {
+    label: 'Saturday', title: 'Legs (No Deadlift)', tag: 'Strength', tagClass: 'tag-strength',
+    exercises: [
+      { name: 'Cross trainer warm-up', note: 'Moderate pace', sets: '10 min', type: 'type-cardio' },
+      { name: 'Leg press machine', note: 'Feet shoulder width, full range', sets: '4 × 12', type: 'type-strength' },
+      { name: 'Leg extension machine', note: 'Squeeze at top, slow descent', sets: '3 × 15', type: 'type-strength' },
+      { name: 'Leg curl machine', note: 'Control the movement both ways', sets: '3 × 15', type: 'type-strength' },
+      { name: 'Goblet squat (dumbbell)', note: 'Hold DB at chest, squat deep', sets: '3 × 12', type: 'type-strength' },
+      { name: 'Walking lunges', note: 'Long stride, knee doesn\'t pass toe', sets: '3 × 20 steps', type: 'type-strength' },
+      { name: 'Calf raises (machine)', note: 'Full range, pause at top', sets: '4 × 20', type: 'type-strength' },
+      { name: 'Jumping jacks', note: 'Between sets to keep heart rate up', sets: '3 × 50', type: 'type-cardio' },
+    ],
+    tip: '🦵 Legs are your biggest muscle group — training them burns the most calories and boosts testosterone. Never skip.'
+  },
+  sun: {
+    label: 'Sunday', title: 'Steady Cardio + Abs', tag: 'Cardio', tagClass: 'tag-cardio',
+    exercises: [
+      { name: 'Treadmill incline walk', note: '8–12% incline, 5–6 km/h steady', sets: '30–40 min', type: 'type-cardio' },
+      { name: 'Cross trainer (optional extra)', note: 'If energy allows', sets: '10 min', type: 'type-cardio' },
+      { name: 'Decline crunches', note: 'Slow and controlled', sets: '3 × 20', type: 'type-core' },
+      { name: 'Hanging knee raises', note: 'Or lying leg raises if no bar', sets: '3 × 15', type: 'type-core' },
+      { name: 'Side plank (each side)', note: 'Keep hips up', sets: '3 × 30s', type: 'type-core' },
+      { name: 'Burpees (finisher)', note: 'Optional — go hard if energy allows', sets: '2 × 10', type: 'type-cardio' },
+    ],
+    tip: '🚶 Incline treadmill walking is the safest, most effective fat-burn for your weight. Increase incline every 2 weeks.'
+  }
+};
+
+let currentDay = null;
+
+function showDay(key) {
+  const day = days[key];
+  const detail = document.getElementById('ex-detail');
+
+  if (currentDay === key && detail.classList.contains('visible')) {
+    detail.classList.remove('visible');
+    currentDay = null;
+    document.querySelectorAll('.day-card').forEach(c => c.classList.remove('active-day'));
+    return;
+  }
+
+  currentDay = key;
+  document.querySelectorAll('.day-card').forEach((c, i) => {
+    c.classList.remove('active-day');
+  });
+  event.currentTarget.classList.add('active-day');
+
+  document.getElementById('ex-day-label').textContent = day.label;
+  document.getElementById('ex-day-title').textContent = day.title;
+  const tagEl = document.getElementById('ex-day-tag');
+  tagEl.textContent = day.tag;
+  tagEl.className = 'day-tag ' + day.tagClass;
+
+  const list = document.getElementById('ex-list');
+  list.innerHTML = day.exercises.map(ex => `
+    <li class="ex-item">
+      <div>
+        <div class="ex-item-name">${ex.name}</div>
+        <div class="ex-item-note">${ex.note}</div>
+      </div>
+      <span class="ex-sets">${ex.sets}</span>
+      <span class="ex-type ${ex.type}">${ex.type.replace('type-','')}</span>
+    </li>
+  `).join('');
+
+  document.getElementById('ex-tip').textContent = day.tip;
+  detail.classList.add('visible');
+  setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+// Fade in on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
