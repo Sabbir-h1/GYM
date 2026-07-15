@@ -98,6 +98,7 @@ nav {
   padding: 14px 32px; border-radius: 4px; font-weight: 600;
   text-decoration: none; font-size: 14px; letter-spacing: 0.5px;
   opacity: 0; animation: up 0.7s 0.8s forwards; transition: background 0.2s;
+  cursor: pointer;
 }
 .hero-cta:hover { background: #c44416; }
 
@@ -107,7 +108,7 @@ nav {
 .section-title { font-family: 'Syne', sans-serif; font-size: clamp(32px, 5vw, 56px); font-weight: 800; line-height: 1.05; margin-bottom: 2rem; }
 .divider { height: 1px; background: var(--border); }
 
-/* CARDIO BANNER */
+/* BANNER */
 .cardio-banner {
   background: var(--accent); color: white;
   padding: 1.25rem 2rem;
@@ -163,7 +164,7 @@ nav {
 }
 .week-tab:hover { border-color: var(--accent); color: var(--accent); }
 .week-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
-.week-tab.rest { opacity: 0.5; cursor: default; }
+.week-tab.rest { opacity: 0.5; }
 
 .day-panel { display: none; }
 .day-panel.active { display: block; animation: fadeIn 0.25s ease; }
@@ -174,6 +175,7 @@ nav {
 .workout-block {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 8px; overflow: hidden;
+  margin-bottom: 1.5rem;
 }
 .workout-block-header {
   padding: 1rem 1.25rem;
@@ -214,6 +216,14 @@ nav {
 .rest-icon { font-size: 56px; margin-bottom: 1rem; }
 .rest-title { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 0.5rem; }
 .rest-desc { color: var(--muted); font-size: 14px; max-width: 400px; margin: 0 auto; }
+
+/* PROGRESSION SYSTEM */
+.progression-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+.progression-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
+.progression-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 800; color: var(--accent); margin-bottom: 1rem; border-bottom: 1px dashed var(--border); padding-bottom: 0.5rem; }
+.progression-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.progression-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; }
+.progression-arrow { color: var(--muted); font-size: 10px; }
 
 /* NUTRITION */
 .meal-stack { display: flex; flex-direction: column; gap: 12px; }
@@ -294,15 +304,22 @@ nav {
 .modal-macro-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
 
 /* TIMELINE */
-.tl-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.tl-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
 .tl-card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 8px; padding: 1.5rem 1.25rem;
 }
 .tl-arrow { font-size: 28px; margin-bottom: 0.75rem; }
 .tl-month { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.25rem; }
-.tl-weight { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 0.5rem; }
+.tl-weight { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 0.5rem; }
 .tl-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+/* TABLES */
+.tracker-table-container { width: 100%; overflow-x: auto; margin-top: 1.5rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+.tracker-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+.tracker-table th { background: #1a1814; color: #f5f0e8; font-family: 'Syne', sans-serif; padding: 10px 14px; font-weight: 700; }
+.tracker-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--muted); }
+.tracker-table tr:last-child td { border-bottom: none; }
 
 /* ANIMATIONS */
 @keyframes up { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
@@ -318,295 +335,198 @@ footer { text-align:center; padding:3rem 2rem; border-top:1px solid var(--border
 <nav>
   <div class="nav-logo">SABBIR</div>
   <div class="nav-links">
-    <a class="nav-link" onclick="scrollTo('cardio')">Daily Cardio</a>
-    <a class="nav-link" onclick="scrollTo('workout')">Workout</a>
-    <a class="nav-link" onclick="scrollTo('nutrition')">Nutrition</a>
-    <a class="nav-link" onclick="scrollTo('recipes')">Recipes</a>
-    <a class="nav-link" onclick="scrollTo('timeline')">Timeline</a>
+    <a class="nav-link" onclick="scrollTo('strategy')">Loose Skin Core Strategy</a>
+    <a class="nav-link" onclick="scrollTo('workout')">Home Training</a>
+    <a class="nav-link" onclick="scrollTo('progression')">Progression Ladders</a>
+    <a class="nav-link" onclick="scrollTo('nutrition')">Bangladeshi Nutrition</a>
+    <a class="nav-link" onclick="scrollTo('tracker')">Metrics Tracker</a>
+    <a class="nav-link" onclick="scrollTo('timeline')">Milestones</a>
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
   <div class="hero-content">
-    <p class="hero-eyebrow">Sabbir's 16-Week Transformation · Age 16 · Beginner</p>
+    <p class="hero-eyebrow">Sabbir's Custom Transformation Plan · Age 18 · Scientific Fat Loss</p>
     <h1 class="hero-title">
-      FROM<br><em>105 KG</em><br>TO 90 KG
+      FROM<br><em>110 KG</em><br>TO 85 KG
     </h1>
     <div class="hero-row">
-      <span class="hero-pill">🔥 Fat loss is the <strong>main goal</strong></span>
-      <span class="hero-pill">💪 Muscle is the <strong>bonus</strong></span>
-      <span class="hero-pill">📅 Cardio <strong>every day</strong></span>
-      <span class="hero-pill">⏱ 1.5–2 hrs/day</span>
+      <span class="hero-pill">🔥 Deficit Target: <strong>~1,800 kcal/day</strong></span>
+      <span class="hero-pill">💪 Pure Muscle Defense: <strong>130–160g Protein</strong></span>
+      <span class="hero-pill">💧 Skin Elasticity: <strong>3–4L Water</strong></span>
+      <span class="hero-pill">👣 Activity Baseline: <strong>8K–10K Steps</strong></span>
     </div>
-    <a class="hero-cta" onclick="scrollTo('cardio')">View My Plan ↓</a>
+    <a class="hero-cta" onclick="scrollTo('strategy')">Open Blueprint Plan ↓</a>
   </div>
 </div>
 
-<!-- CARDIO SECTION -->
-<div class="cardio-banner" id="cardio">
-  <div class="cardio-banner-label">🔥 CARDIO EVERY SINGLE DAY — NO EXCEPTIONS</div>
-  <div class="cardio-banner-desc">This is how you lose 15 kg. Every session starts and ends with cardio. No cardio = no fat loss.</div>
+<div class="cardio-banner" id="strategy">
+  <div class="cardio-banner-label">🛡️ THE LOOSE SKIN DEFENSE PROTOCOL</div>
+  <div class="cardio-banner-desc">Slowing down fat loss while elevating protein intake allows structural skin matrix contraction to sync safely alongside fat layer adjustments.</div>
 </div>
 
 <div class="section">
-  <p class="eyebrow">Daily Cardio Protocol</p>
-  <h2 class="section-title">Every Day.<br>No Skipping.</h2>
-
-  <div class="cardio-protocol fade-up">
-    <div class="cardio-protocol-header">
-      <div class="cardio-protocol-title">Every Gym Session — In This Order</div>
-      <div class="cardio-badge">~400–500 cal burned</div>
+  <p class="eyebrow">Mechanics</p>
+  <h2 class="section-title">Why This Plan Protects Skin Structure</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+    <div style="background: var(--surface); padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px;">
+      <h3 style="font-weight: 700; margin-bottom: 0.5rem; color: var(--accent);">High Protein Defense</h3>
+      <p style="font-size: 13px; color: var(--muted);">Preserves lean structural muscle tissues, maintaining full and robust base aesthetics directly beneath the cellular dermal matrix layers.</p>
     </div>
-    <ul class="cardio-steps">
-      <li class="cardio-step">
-        <div class="step-num">1</div>
-        <div>
-          <div class="step-name">Treadmill Warm-Up Walk</div>
-          <div class="step-desc">Speed 4–5 km/h, flat. Just get your body moving and joints warm.</div>
-        </div>
-        <div>
-          <div class="step-dur">10 min</div>
-          <div class="step-cal">~50 cal</div>
-        </div>
-      </li>
-      <li class="cardio-step">
-        <div class="step-num">2</div>
-        <div>
-          <div class="step-name">Cross Trainer — Fat Burner Mode</div>
-          <div class="step-desc">Your machine's built-in fat burner program. Keeps heart rate in fat-burning zone the whole time. USE THIS EVERY DAY — it's designed exactly for your goal.</div>
-        </div>
-        <div>
-          <div class="step-dur">20 min</div>
-          <div class="step-cal">~200 cal</div>
-        </div>
-      </li>
-      <li class="cardio-step">
-        <div class="step-num">3</div>
-        <div>
-          <div class="step-name">Strength / Weights Training</div>
-          <div class="step-desc">The day's muscle work (chest, back, legs etc). See workout section below.</div>
-        </div>
-        <div>
-          <div class="step-dur">50–70 min</div>
-          <div class="step-cal">~150 cal</div>
-        </div>
-      </li>
-      <li class="cardio-step">
-        <div class="step-num">4</div>
-        <div>
-          <div class="step-name">Treadmill Incline Walk (Cooldown)</div>
-          <div class="step-desc">Set incline to 8–10%, speed 5 km/h. This burns fat aggressively with zero joint stress. Perfect for your weight. Do NOT skip this — it's your best fat burner.</div>
-        </div>
-        <div>
-          <div class="step-dur">20 min</div>
-          <div class="step-cal">~120 cal</div>
-        </div>
-      </li>
-    </ul>
-    <div class="total-row">
-      <div>
-        <div class="total-label">Total daily cardio</div>
-        <div style="font-size:12px;color:var(--muted);">Cross trainer + treadmill every single day</div>
-      </div>
-      <div class="total-val">~500 cal/day</div>
+    <div style="background: var(--surface); padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px;">
+      <h3 style="font-weight: 700; margin-bottom: 0.5rem; color: var(--accent);">Resistance Signaling</h3>
+      <p style="font-size: 13px; color: var(--muted);">Strength exercises issue deep physical biological commands telling the system to safeguard core lean mass assets during deficits.</p>
     </div>
-  </div>
-
-  <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;">
-    <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);font-weight:600;margin-bottom:0.5rem;">Wednesday & Sunday — Extra Cardio Day (no weights)</p>
-    <p style="font-size:14px;color:var(--muted);line-height:1.7;">On these 2 days, skip the weights and do <strong style="color:var(--text);">double cardio</strong> instead: Cross trainer fat burner 20 min → rest 5 min → Treadmill incline walk 30 min → Bodyweight exercises (jumping jacks 3×50, high knees 3×30s, burpees 3×10). Total ~400–500 extra calories. This is how you accelerate the fat loss.</p>
+    <div style="background: var(--surface); padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px;">
+      <h3 style="font-weight: 700; margin-bottom: 0.5rem; color: var(--accent);">Controlled Adaptations</h3>
+      <p style="font-size: 13px; color: var(--muted);">Losing weight gradually ($0.5\text{--}1\text{ kg}$ per week) buys time for individual elastic tissues to contract smoothly without drastic collapse.</p>
+    </div>
+    <div style="background: var(--surface); padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px;">
+      <h3 style="font-weight: 700; margin-bottom: 0.5rem; color: var(--accent);">Age 18 Advantage</h3>
+      <p style="font-size: 13px; color: var(--muted);">Natural skin elasticity, cellular collagen generation speed, and structural recovery capacity peaks powerfully at this stage.</p>
+    </div>
   </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- WORKOUT SECTION -->
 <div class="section" id="workout">
-  <p class="eyebrow">Weekly Strength Split</p>
-  <h2 class="section-title">Simple.<br>Effective.<br>Beginner-Safe.</h2>
-  <p style="color:var(--muted);margin-bottom:2rem;font-size:14px;">All exercises are machine or dumbbell based — no barbell, no deadlift, no bench press. Light-to-medium weight, slow and controlled reps. Feel the muscle, don't just move the weight.</p>
+  <p class="eyebrow">Weekly Training Blueprint</p>
+  <h2 class="section-title">Sustainable Home Split<br><span style="font-size: 24px; color: var(--muted);">1.5 Hours Daily Routine</span></h2>
 
   <div class="week-tabs">
-    <button class="week-tab active" onclick="showDay('mon',this)">Mon</button>
-    <button class="week-tab" onclick="showDay('tue',this)">Tue</button>
-    <button class="week-tab" onclick="showDay('wed',this)">Wed</button>
-    <button class="week-tab" onclick="showDay('thu',this)">Thu</button>
-    <button class="week-tab rest" onclick="return false">Fri ✕</button>
-    <button class="week-tab" onclick="showDay('sat',this)">Sat</button>
-    <button class="week-tab" onclick="showDay('sun',this)">Sun</button>
+    <button class="week-tab active" onclick="showDay('mon',this)">Mon (Full Body)</button>
+    <button class="week-tab" onclick="showDay('tue',this)">Tue (Cardio + Core)</button>
+    <button class="week-tab" onclick="showDay('wed',this)">Wed (Full Body Strength)</button>
+    <button class="week-tab" onclick="showDay('thu',this)">Thu (Cardio + Strength)</button>
+    <button class="week-tab" onclick="showDay('fri',this)">Fri (Full Body Strength)</button>
+    <button class="week-tab" onclick="showDay('sat',this)">Sat (Active Recovery)</button>
+    <button class="week-tab rest" onclick="showDay('sun',this)">Sun (Rest)</button>
   </div>
 
-  <!-- MON -->
   <div class="day-panel active" id="day-mon">
     <div class="workout-layout">
       <div class="workout-block">
         <div class="workout-block-header">
-          <div class="workout-block-title">💪 Chest</div>
-          <span class="block-tag tag-w">Weights</span>
+          <div class="workout-block-title">⏱️ Phase 1 & 3: Warm-up & Cardio</div>
+          <span class="block-tag tag-c">Cardio</span>
         </div>
         <ul class="ex-rows">
-          <li class="ex-row"><div><div class="ex-row-name">Machine Chest Press</div><div class="ex-row-note">Sit upright, push straight. Don't arch back.</div></div><div class="ex-row-sets">3 × 12</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Incline Dumbbell Press</div><div class="ex-row-note">45° incline, squeeze chest at top</div></div><div class="ex-row-sets">3 × 12</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Cable Chest Fly</div><div class="ex-row-note">Wide arc, slight bend in elbows</div></div><div class="ex-row-sets">3 × 15</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Push-ups (wide grip)</div><div class="ex-row-note">Do as many as you can — even 5 is fine</div></div><div class="ex-row-sets">2 × max</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Dynamic Movement Warm-Up</div><div class="ex-row-note">March in place (2 min), arm circles, hip circles, leg swings, light stretch</div></div><div class="ex-row-sets">10 min</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Post-Strength Brisk Walk</div><div class="ex-row-note">Sustained brisk aerobic step movement for steady caloric depletion</div></div><div class="ex-row-sets">25 min</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Cool-Down Static Stretching</div><div class="ex-row-note">Promotes deep tissue recovery, layout flexible long muscle patterns</div></div><div class="ex-row-sets">10 min</div></li>
         </ul>
-        <div class="tip-bar">✓ Rest 60–75 sec. Light weight, feel the chest squeeze.</div>
       </div>
       <div class="workout-block">
         <div class="workout-block-header">
-          <div class="workout-block-title">🦾 Triceps + Abs</div>
-          <span class="block-tag tag-abs">Arms & Core</span>
+          <div class="workout-block-title">💪 Phase 2: Core Strength Circuit</div>
+          <span class="block-tag tag-w">3 Rounds</span>
         </div>
         <ul class="ex-rows">
-          <li class="ex-row"><div><div class="ex-row-name">Cable Tricep Pushdown</div><div class="ex-row-note">Elbows stay pinned to your sides</div></div><div class="ex-row-sets">3 × 15</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Overhead Dumbbell Extension</div><div class="ex-row-note">Both hands on one dumbbell, lower slowly</div></div><div class="ex-row-sets">3 × 12</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Plank</div><div class="ex-row-note">Straight line head to toe, breathe</div></div><div class="ex-row-sets">3 × 30s</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Crunches</div><div class="ex-row-note">Exhale at top, don't pull neck</div></div><div class="ex-row-sets">3 × 20</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Incline Push-ups</div><div class="ex-row-note">Execute stable against wall or high table surface</div></div><div class="ex-row-sets">8–12 reps</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Chair Squats</div><div class="ex-row-note">Control descent until hips softly kiss seat platform</div></div><div class="ex-row-sets">15 reps</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Glute Bridges</div><div class="ex-row-note">Drive down completely through heels, fully squeeze glute tops</div></div><div class="ex-row-sets">15 reps</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Bird Dogs</div><div class="ex-row-note">Extend fully straight alternate limbs smoothly</div></div><div class="ex-row-sets">10 / side</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Standing Calf Raises</div><div class="ex-row-note">Maximize upper tip peak ankle contractions</div></div><div class="ex-row-sets">20 reps</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Forearm Plank</div><div class="ex-row-note">Brace abdominal wall; lock torso spine neutral</div></div><div class="ex-row-sets">20–30 sec</div></li>
         </ul>
-        <div class="tip-bar">✓ Monday focus: Chest gets priority. Triceps are bonus today.</div>
+        <div class="tip-bar">✓ Rest 60–90 seconds directly between circuit rounds.</div>
       </div>
     </div>
   </div>
 
-  <!-- TUE -->
   <div class="day-panel" id="day-tue">
     <div class="workout-layout">
       <div class="workout-block">
         <div class="workout-block-header">
-          <div class="workout-block-title">🏋️ Back</div>
-          <span class="block-tag tag-w">Weights</span>
+          <div class="workout-block-title">🏃‍♂️ Cardio Engine</div>
+          <span class="block-tag tag-c">Aerobic</span>
         </div>
         <ul class="ex-rows">
-          <li class="ex-row"><div><div class="ex-row-name">Lat Pulldown (wide grip)</div><div class="ex-row-note">Pull to upper chest, lean back slightly</div></div><div class="ex-row-sets">3 × 12</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Seated Cable Row</div><div class="ex-row-note">Squeeze shoulder blades together at the end</div></div><div class="ex-row-sets">3 × 12</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Dumbbell Single-Arm Row</div><div class="ex-row-note">Knee on bench, pull elbow to ceiling</div></div><div class="ex-row-sets">3 × 12 each</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Face Pulls (cable rope)</div><div class="ex-row-note">Pull to forehead level, elbows high</div></div><div class="ex-row-sets">3 × 15</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Brisk Continuous Walking</div><div class="ex-row-note">Maintain consistent, fat-burning brisk tempo outdoors or treadmill</div></div><div class="ex-row-sets">40 min</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Static Deep Stretch</div><div class="ex-row-note">Focus on lower limbs, hips, and calves recovery</div></div><div class="ex-row-sets">15 min</div></li>
         </ul>
-        <div class="tip-bar">✓ Think "pull with elbows not hands" — that's how you feel your back.</div>
       </div>
       <div class="workout-block">
         <div class="workout-block-header">
-          <div class="workout-block-title">💪 Biceps + Abs</div>
-          <span class="block-tag tag-abs">Arms & Core</span>
+          <div class="workout-block-title">🧱 Midsection Core Circuit</div>
+          <span class="block-tag tag-abs">3 Rounds</span>
         </div>
         <ul class="ex-rows">
-          <li class="ex-row"><div><div class="ex-row-name">Dumbbell Bicep Curl</div><div class="ex-row-note">Twist wrist outward at top. Don't swing.</div></div><div class="ex-row-sets">3 × 15</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Hammer Curl</div><div class="ex-row-note">Neutral grip (thumbs up), controlled</div></div><div class="ex-row-sets">3 × 12</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Lying Leg Raises</div><div class="ex-row-note">Slow and controlled, lower legs slowly</div></div><div class="ex-row-sets">3 × 15</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Mountain Climbers</div><div class="ex-row-note">Drive knees fast to chest</div></div><div class="ex-row-sets">3 × 30s</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Dead Bug</div><div class="ex-row-note">Keep lower back flat against ground floor surface</div></div><div class="ex-row-sets">10 reps</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Heel Taps</div><div class="ex-row-note">Alternate oblique reaches cleanly</div></div><div class="ex-row-sets">20 reps</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Side Plank</div><div class="ex-row-note">Lift hips high, hold straight vertical frame</div></div><div class="ex-row-sets">20s / side</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Mountain Climbers</div><div class="ex-row-note">Drive knees straight with core tension</div></div><div class="ex-row-sets">15 reps</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Hollow Hold</div><div class="ex-row-note">Anchor lower lumbar system safely</div></div><div class="ex-row-sets">15 sec</div></li>
         </ul>
-        <div class="tip-bar">✓ Biceps grow slow — be patient. Back is what matters most today.</div>
       </div>
     </div>
   </div>
 
-  <!-- WED -->
   <div class="day-panel" id="day-wed">
     <div class="rest-card">
-      <div class="rest-icon">🔥</div>
-      <div class="rest-title">Wednesday — Full Cardio Day</div>
-      <div class="rest-desc" style="color:var(--text);max-width:500px;">No weights today. Double cardio session:<br><br>
-        <strong>Cross trainer fat burner mode</strong> → 20 min (200 cal)<br>
-        Rest 5 min, water<br>
-        <strong>Treadmill incline walk</strong> → 30 min at 8–10% incline (180 cal)<br>
-        <strong>Jumping jacks</strong> → 3 × 50<br>
-        <strong>High knees</strong> → 3 × 30 seconds<br>
-        <strong>Burpees</strong> → 3 × 10<br><br>
-        <span style="color:var(--accent);font-weight:600;">Total: ~500–600 calories burned this session alone.</span>
+      <div class="rest-icon">⚡</div>
+      <div class="rest-title">Wednesday — Full Body Strength Progression</div>
+      <div class="rest-desc">
+        Re-execute the exact same exercise structural setup as Monday. <br><br>
+        <strong>Progressive Option:</strong> If energy, baseline capacity, and strict structural form allow, add **one extra full round** across the main circuit.
       </div>
     </div>
   </div>
 
-  <!-- THU -->
   <div class="day-panel" id="day-thu">
     <div class="workout-layout">
       <div class="workout-block">
         <div class="workout-block-header">
-          <div class="workout-block-title">🏔️ Shoulders</div>
-          <span class="block-tag tag-w">Weights</span>
-        </div>
-        <ul class="ex-rows">
-          <li class="ex-row"><div><div class="ex-row-name">Dumbbell Shoulder Press</div><div class="ex-row-note">Seated, don't lock out at top</div></div><div class="ex-row-sets">3 × 12</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Lateral Raises</div><div class="ex-row-note">Lead with elbows, slight bend in arm. Go light!</div></div><div class="ex-row-sets">4 × 15</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Front Raises</div><div class="ex-row-note">Alternate arms, raise to eye level</div></div><div class="ex-row-sets">3 × 12</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Machine Shoulder Press</div><div class="ex-row-note">Safe alternative if dumbbells feel wobbly</div></div><div class="ex-row-sets">3 × 12</div></li>
-        </ul>
-        <div class="tip-bar">✓ Lateral raises = wide shoulders. Use very light weight and feel the burn.</div>
-      </div>
-      <div class="workout-block">
-        <div class="workout-block-header">
-          <div class="workout-block-title">🔩 Core</div>
-          <span class="block-tag tag-abs">Abs & Core</span>
-        </div>
-        <ul class="ex-rows">
-          <li class="ex-row"><div><div class="ex-row-name">Plank</div><div class="ex-row-note">Hold 45 seconds, straight body</div></div><div class="ex-row-sets">3 × 45s</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Russian Twists</div><div class="ex-row-note">Feet slightly off floor, twist fully each side</div></div><div class="ex-row-sets">3 × 20</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Crunches</div><div class="ex-row-note">Don't pull your neck</div></div><div class="ex-row-sets">3 × 20</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Side Plank (each side)</div><div class="ex-row-note">Hips up, squeeze obliques</div></div><div class="ex-row-sets">2 × 30s</div></li>
-        </ul>
-        <div class="tip-bar">✓ Strong core = better posture + lower back protection.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FRI -->
-  <div class="day-panel" id="day-fri">
-    <div class="rest-card">
-      <div class="rest-icon">😴</div>
-      <div class="rest-title">Friday — Full Rest</div>
-      <div class="rest-desc">Your body builds muscle and burns fat WHILE YOU REST. This day is not wasted — it's essential. Sleep 8–9 hours tonight. Light 20 min walk is fine but no gym.</div>
-    </div>
-  </div>
-
-  <!-- SAT -->
-  <div class="day-panel" id="day-sat">
-    <div class="workout-layout">
-      <div class="workout-block">
-        <div class="workout-block-header">
-          <div class="workout-block-title">🦵 Legs</div>
-          <span class="block-tag tag-w">Weights</span>
-        </div>
-        <ul class="ex-rows">
-          <li class="ex-row"><div><div class="ex-row-name">Leg Press Machine</div><div class="ex-row-note">Feet shoulder width, push through heels</div></div><div class="ex-row-sets">4 × 12</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Leg Extension Machine</div><div class="ex-row-note">Squeeze at top, lower slowly (3 sec)</div></div><div class="ex-row-sets">3 × 15</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Leg Curl Machine</div><div class="ex-row-note">Control both the up and down</div></div><div class="ex-row-sets">3 × 15</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Goblet Squat (dumbbell)</div><div class="ex-row-note">Hold DB at chest, squat deep, heels flat</div></div><div class="ex-row-sets">3 × 12</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Calf Raises (machine)</div><div class="ex-row-note">Full range, pause at top 1 sec</div></div><div class="ex-row-sets">4 × 20</div></li>
-        </ul>
-        <div class="tip-bar">✓ Legs = biggest muscles = most calories burned. Never skip leg day.</div>
-      </div>
-      <div class="workout-block">
-        <div class="workout-block-header">
-          <div class="workout-block-title">🔥 Cardio Boost + Abs</div>
+          <div class="workout-block-title">🚶‍♂️ Cardio Phase</div>
           <span class="block-tag tag-c">Cardio</span>
         </div>
         <ul class="ex-rows">
-          <li class="ex-row"><div><div class="ex-row-name">Jumping Jacks</div><div class="ex-row-note">Between sets to keep heart rate elevated</div></div><div class="ex-row-sets">3 × 50</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Walking Lunges</div><div class="ex-row-note">Long stride, back knee near floor</div></div><div class="ex-row-sets">3 × 20 steps</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Lying Leg Raises</div><div class="ex-row-note">Slow controlled movement</div></div><div class="ex-row-sets">3 × 15</div></li>
-          <li class="ex-row"><div><div class="ex-row-name">Plank Hold</div><div class="ex-row-note">Focus on breathing</div></div><div class="ex-row-sets">2 × 30s</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Brisk Continuous Walking</div><div class="ex-row-note">Aerobic condition phase targeting steps ceiling</div></div><div class="ex-row-sets">45 min</div></li>
         </ul>
-        <div class="tip-bar">✓ Leg day burns the most fat of any session. Go hard today.</div>
+      </div>
+      <div class="workout-block">
+        <div class="workout-block-header">
+          <div class="workout-block-title">🔋 Strength Finisher Circuit</div>
+          <span class="block-tag tag-w">3 Rounds</span>
+        </div>
+        <ul class="ex-rows">
+          <li class="ex-row"><div><div class="ex-row-name">Squats</div><div class="ex-row-note">Controlled down to depth baseline</div></div><div class="ex-row-sets">15 reps</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Wall Push-ups</div><div class="ex-row-note">Focus on strong upper chest push mechanics</div></div><div class="ex-row-sets">10 reps</div></li>
+          <li class="ex-row"><div><div class="ex-row-name">Plank Hold</div><div class="ex-row-note">Maintain clean horizontal pelvic posture</div></div><div class="ex-row-sets">30 sec</div></li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <!-- SUN -->
+  <div class="day-panel" id="day-fri">
+    <div class="rest-card">
+      <div class="rest-icon">🔥</div>
+      <div class="rest-title">Friday — Full Body Strength Repeat</div>
+      <div class="rest-desc">Repeat the foundational Monday strength blueprint to consolidate motor patterns, maximize weekly lean muscle retention signaling, and solidify weekly step targets.</div>
+    </div>
+  </div>
+
+  <div class="day-panel" id="day-sat">
+    <div class="rest-card">
+      <div class="rest-icon">🍃</div>
+      <div class="rest-title">Saturday — Active Recovery Protocol</div>
+      <div class="rest-desc" style="text-align: left; max-width: 600px;">
+        • <strong>60-Minute Walk:</strong> Low-intensity aerobic fat burning focus.<br>
+        • <strong>Full Body Stretching:</strong> Target high-tension areas to drop cortisol levels.<br>
+        • <strong>Mobility Exercises:</strong> Unlocks hip joint patterns and spinal rotation paths.
+      </div>
+    </div>
+  </div>
+
   <div class="day-panel" id="day-sun">
     <div class="rest-card">
-      <div class="rest-icon">💚</div>
-      <div class="rest-title">Sunday — Full Cardio Day</div>
-      <div class="rest-desc" style="color:var(--text);max-width:500px;">No weights today. Same as Wednesday — double cardio:<br><br>
-        <strong>Cross trainer fat burner mode</strong> → 20 min (200 cal)<br>
-        Rest 5 min, water<br>
-        <strong>Treadmill incline walk</strong> → 30 min at 8–10% incline (180 cal)<br>
-        <strong>Burpees</strong> → 3 × 10<br>
-        <strong>High knees</strong> → 3 × 30 seconds<br>
-        <strong>Mountain climbers</strong> → 3 × 30 seconds<br><br>
-        <span style="color:var(--accent2);font-weight:600;">Tonight: weigh yourself. Same time every Sunday. Track your progress.</span>
+      <div class="rest-icon">💤</div>
+      <div class="rest-title">Sunday — System Rest Day</div>
+      <div class="rest-desc">
+        Complete operational pause to allow tissues to rebuild and skin support matrix components to synthesize. Easy baseline walking permitted if desired. Ensure sleep hits the target window tonight.
       </div>
     </div>
   </div>
@@ -614,306 +534,270 @@ footer { text-align:center; padding:3rem 2rem; border-top:1px solid var(--border
 
 <div class="divider"></div>
 
-<!-- NUTRITION -->
+<div class="section" id="progression">
+  <p class="eyebrow">Form Over Weight</p>
+  <h2 class="section-title">The Exercise Progression Ladders</h2>
+  <p style="color:var(--muted); font-size:14px; margin-bottom: 1rem;">Start at the specific tier matching your current execution form. Advance to the lower tiers <strong>only</strong> when you can confidently master target rep schemes with clean control.</p>
+  
+  <div class="progression-grid">
+    <div class="progression-card">
+      <div class="progression-title">Push-Up Progression</div>
+      <ul class="progression-list">
+        <li class="progression-item"><span style="color: var(--accent);">1.</span> Wall Push-ups</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Incline (Table)</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Incline (Chair)</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Knee Push-ups</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Negative Push-ups</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Full Push-ups</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Diamond / Decline</li>
+      </ul>
+    </div>
+
+    <div class="progression-card">
+      <div class="progression-title">Squat Progression</div>
+      <ul class="progression-list">
+        <li class="progression-item"><span style="color: var(--accent);">1.</span> Chair Squat</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Bodyweight Squat</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Pause Squat</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Split Squat</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Reverse Lunge</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Bulgarian Split Squat</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Jump Squat</li>
+      </ul>
+    </div>
+
+    <div class="progression-card">
+      <div class="progression-title">Core Progression</div>
+      <ul class="progression-list">
+        <li class="progression-item"><span style="color: var(--accent);">1.</span> Dead Bug</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Plank (30 sec)</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Plank (60 sec)</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Side Plank</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Leg Raises</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Hollow Hold</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> V-ups</li>
+      </ul>
+    </div>
+
+    <div class="progression-card">
+      <div class="progression-title">Glutes Progression</div>
+      <ul class="progression-list">
+        <li class="progression-item"><span style="color: var(--accent);">1.</span> Glute Bridge</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Single-leg Bridge</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Hip Thrust (Bed/Chair)</li>
+        <li class="progression-item"><span class="progression-arrow">↓</span> Single-leg Hip Thrust</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
 <div class="section" id="nutrition">
-  <p class="eyebrow">Daily Eating Plan</p>
-  <h2 class="section-title">Eat Smart.<br>Lose Fat.</h2>
-  <p style="color:var(--muted);margin-bottom:0.5rem;font-size:14px;">You said only lunch you can eat fish/meat. So we build protein around lunch and keep breakfast/dinner simple. Target: <strong style="color:var(--text);">1,800–1,900 kcal · 120–130g protein daily.</strong></p>
-  <p style="color:var(--accent);font-size:13px;font-weight:500;margin-bottom:2rem;">Tap each meal to expand ↓</p>
+  <p class="eyebrow">Bangladeshi High-Protein Fuel</p>
+  <h2 class="section-title">1,800-Kcal Structured Menu</h2>
+  <p style="color:var(--muted); margin-bottom: 2rem; font-size: 14px;">Ensuring a rich distribution of amino acids across every feeding phase to accelerate metabolic tissue synthesis.</p>
 
-  <div class="meal-stack fade-up">
-
+  <div class="meal-stack">
     <div class="meal-card">
       <div class="meal-header" onclick="toggleMeal(this)">
-        <span class="meal-time-badge">7:00 AM</span>
-        <div>
-          <div class="meal-name">Breakfast</div>
-        </div>
-        <div class="meal-macro">~450 kcal · <strong>~25g protein</strong></div>
+        <span class="meal-time-badge">Breakfast</span>
+        <div class="meal-name">Eggs + Lal Atta Roti Combo</div>
+        <div class="meal-macro">~450 kcal · <strong>~28g Protein</strong></div>
         <div class="meal-arrow">▾</div>
       </div>
       <div class="meal-body">
         <div class="meal-items">
-          <div class="meal-item">2 whole eggs — boil or scramble with 1 tsp oil only</div>
-          <div class="meal-item">1 cup milk (full fat or semi skimmed)</div>
-          <div class="meal-item">2 slices whole wheat bread OR 1 cup oats with milk</div>
-          <div class="meal-item">1 banana or any fruit you like</div>
-        </div>
-        <div style="margin-top:1rem;padding:0.75rem;background:var(--light-green);border-radius:6px;font-size:13px;color:var(--accent2);">
-          Your eggs are a great choice. Keep them every day. Just don't fry in too much oil.
+          <div class="meal-item"><strong>Option 1:</strong> 3 Hard-Boiled Eggs + 2 Chapatis (made using Lal Atta) + Fresh cucumber and tomato salad mix.</div>
+          <div class="meal-item"><strong>Option 2:</strong> Whole Vegetable Omelette (whisked using 3 whole eggs) paired with 2 Lal Atta chapatis.</div>
         </div>
       </div>
     </div>
 
     <div class="meal-card">
       <div class="meal-header" onclick="toggleMeal(this)">
-        <span class="meal-time-badge">11:00 AM</span>
-        <div>
-          <div class="meal-name">Mid-Morning Snack</div>
-        </div>
-        <div class="meal-macro">~180 kcal · <strong>~10g protein</strong></div>
+        <span class="meal-time-badge">Snack</span>
+        <div class="meal-name">Mid-Morning Elasticity Guard</div>
+        <div class="meal-macro">~150 kcal · <strong>High Micronutrients</strong></div>
         <div class="meal-arrow">▾</div>
       </div>
       <div class="meal-body">
         <div class="meal-items">
-          <div class="meal-item">1 boiled egg + handful of roasted peanuts (20–25 peanuts)</div>
-          <div class="meal-item">OR 1 cup milk + 1 small fruit</div>
-          <div class="meal-item">OR 100g low-fat yogurt with a little honey</div>
+          <div class="meal-item">Select 1 option daily: 200 g plain low-fat yogurt OR 2 hard-boiled eggs OR 1 fresh local guava / crisp apple.</div>
         </div>
       </div>
     </div>
 
     <div class="meal-card">
       <div class="meal-header" onclick="toggleMeal(this)">
-        <span class="meal-time-badge">1:00 PM</span>
-        <div>
-          <div class="meal-name">Lunch — Main Meal (Fish or Chicken)</div>
-        </div>
-        <div class="meal-macro">~600 kcal · <strong>~50g protein</strong></div>
+        <span class="meal-time-badge">Lunch</span>
+        <div class="meal-name">Main Lean Protein Engine</div>
+        <div class="meal-macro">~550 kcal · <strong>~45g Protein</strong></div>
         <div class="meal-arrow">▾</div>
       </div>
       <div class="meal-body">
         <div class="meal-items">
-          <div class="meal-item">200g fish OR 3 pieces chicken (your main protein source of the day)</div>
-          <div class="meal-item">1 cup cooked rice OR 2 rotis</div>
-          <div class="meal-item">Big portion of vegetables or salad (cucumber, tomato, cabbage, onion)</div>
-          <div class="meal-item">1 cup lentil dal (high protein, filling, cheap)</div>
-        </div>
-        <div style="margin-top:1rem;padding:0.75rem;background:var(--light-accent);border-radius:6px;font-size:13px;color:#c44416;">
-          ⚠ Keep your spice recipe — just reduce mustard oil to 1 tsp max. That one change saves 200 calories.
-        </div>
-        <div style="margin-top:0.5rem;font-size:13px;color:var(--muted);">See the Recipes section below for 6 cooking variations.</div>
-      </div>
-    </div>
-
-    <div class="meal-card">
-      <div class="meal-header" onclick="toggleMeal(this)">
-        <span class="meal-time-badge">4:30 PM</span>
-        <div>
-          <div class="meal-name">Pre-Workout Fuel</div>
-        </div>
-        <div class="meal-macro">~200 kcal · <strong>~8g protein</strong></div>
-        <div class="meal-arrow">▾</div>
-      </div>
-      <div class="meal-body">
-        <div class="meal-items">
-          <div class="meal-item">1 banana + 1 boiled egg — eat 45 minutes before gym</div>
-          <div class="meal-item">OR 1 cup oats with milk and a pinch of salt</div>
-          <div class="meal-item">Drink 1 big glass of water before leaving for gym</div>
-        </div>
-        <div style="margin-top:1rem;padding:0.75rem;background:var(--light-green);border-radius:6px;font-size:13px;color:var(--accent2);">
-          This gives you energy for cardio + weights. Don't train on empty stomach.
+          <div class="meal-item"><strong>Chicken Option:</strong> 150g–180g clean grilled chicken breast + 1 cup cooked rice + mixed vegetables + large leafy side salad.</div>
+          <div class="meal-item"><strong>Fish Option:</strong> 200g local fresh water fish (Rui, Katla, or Tilapia) + 1 cup cooked rice + assorted seasonal deshi vegetables.</div>
         </div>
       </div>
     </div>
 
     <div class="meal-card">
       <div class="meal-header" onclick="toggleMeal(this)">
-        <span class="meal-time-badge">8:00 PM</span>
-        <div>
-          <div class="meal-name">Dinner — Light & High Protein</div>
-        </div>
-        <div class="meal-macro">~450 kcal · <strong>~35g protein</strong></div>
+        <span class="meal-time-badge">Snack</span>
+        <div class="meal-name">Evening Metabolic Crunch</div>
+        <div class="meal-macro">~180 kcal · <strong>Steady Release</strong></div>
         <div class="meal-arrow">▾</div>
       </div>
       <div class="meal-body">
         <div class="meal-items">
-          <div class="meal-item">150g fish (rui, pangaash, tilapia) — boiled or lightly cooked with spices</div>
-          <div class="meal-item">OR 2 eggs scrambled if no fish available</div>
-          <div class="meal-item">1 cup lentil dal</div>
-          <div class="meal-item">Lots of vegetables — no limit on veg</div>
-          <div class="meal-item">Only ½ cup rice at dinner (keep carbs low at night)</div>
+          <div class="meal-item">Mix Option: Handful of dry roasted chickpeas (50g) + 2 hard-boiled eggs.</div>
+          <div class="meal-item">Alternative Option: 200g serving of plain tart homemade yogurt.</div>
         </div>
       </div>
     </div>
 
-  </div>
-
-  <div style="margin-top:1.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;">
-      <div style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--accent);">3.5L</div>
-      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Water per day</div>
-    </div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;">
-      <div style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--accent);">0</div>
-      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Soft drinks / chips</div>
-    </div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;">
-      <div style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--accent);">8h</div>
-      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Sleep minimum</div>
-    </div>
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;">
-      <div style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--accent);">1×</div>
-      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Weigh in per week</div>
+    <div class="meal-card">
+      <div class="meal-header" onclick="toggleMeal(this)">
+        <span class="meal-time-badge">Dinner</span>
+        <div class="meal-name">Recovery Shield Dinner</div>
+        <div class="meal-macro">~550 kcal · <strong>Slow Digesting</strong></div>
+        <div class="meal-arrow">▾</div>
+      </div>
+      <div class="meal-body">
+        <div class="meal-items">
+          <div class="meal-item"><strong>Fish Dinner:</strong> 200g local fish stew + generous fiber-rich vegetable bowl + 2 chapatis.</div>
+          <div class="meal-item"><strong>Chicken Dinner:</strong> 180g chicken breast curry cooked light + deshi vegetables + 2 chapatis.</div>
+          <div class="meal-item"><strong>Daal Dinner Alternative:</strong> 1½ cups cooked thick red lentil daal + 2 whole boiled eggs + mixed cucumber salad + 1 chapati.</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- RECIPES -->
 <div class="section" id="recipes">
-  <p class="eyebrow">Meal Prep</p>
-  <h2 class="section-title">Simple Recipes.<br>High Protein.</h2>
-  <p style="color:var(--muted);margin-bottom:2rem;font-size:14px;">All use your available ingredients — chicken, fish, spices, mustard oil (1 tsp only). Tap any recipe for full instructions.</p>
+  <p class="eyebrow">Local Reference Guide</p>
+  <h2 class="section-title">Deshi Protein Macro Index & Prep</h2>
+  
+  <div style="background: var(--surface); padding: 1.5rem; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 2rem;">
+    <h3 style="font-weight: 700; margin-bottom: 1rem;">Bangladeshi Protein Density Matrix</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; font-size: 13px;">
+      <div style="background: var(--bg); padding: 10px; border-radius: 4px;">🥚 <strong>1 Whole Egg:</strong> 6–7g Protein</div>
+      <div style="background: var(--bg); padding: 10px; border-radius: 4px;">🍗 <strong>100g Chicken Breast:</strong> 31g Protein</div>
+      <div style="background: var(--bg); padding: 10px; border-radius: 4px;">🐟 <strong>100g Rui/Katla/Tilapia:</strong> 20–24g Protein</div>
+      <div style="background: var(--bg); padding: 10px; border-radius: 4px;">🥩 <strong>100g Lean Beef:</strong> 26g Protein</div>
+      <div style="background: var(--bg); padding: 10px; border-radius: 4px;">🍲 <strong>1 Cup Cooked Daal:</strong> 18g Protein</div>
+      <div style="background: var(--bg); padding: 10px; border-radius: 4px;">🥛 <strong>200g Yogurt / 250ml Milk:</strong> 8–12g Protein</div>
+    </div>
+  </div>
 
   <div class="recipe-grid">
-
-    <div class="recipe-card" onclick="openRecipe('r1')">
+    <div class="recipe-card" onclick="openRecipe('m1')">
       <div class="recipe-top">
-        <div class="recipe-emoji">🍗</div>
-        <div class="recipe-name">Spiced Boiled Chicken</div>
-        <div class="recipe-tag">Your Original — Optimised</div>
+        <div class="recipe-emoji">📦</div>
+        <div class="recipe-name">Bulk Chicken Prep</div>
+        <div class="recipe-tag">Batch Prep</div>
       </div>
       <div class="recipe-body">
-        <h4>Why it works</h4>
-        <p>Your current recipe is already great. Just cut the oil to 1 tsp and you save 200 cal. High protein, filling, easy to make.</p>
-        <div class="recipe-macros">
-          <div class="recipe-macro"><div class="recipe-macro-val">280</div><div class="recipe-macro-label">kcal</div></div>
-          <div class="recipe-macro"><div class="recipe-macro-val">42g</div><div class="recipe-macro-label">protein</div></div>
-          <div class="recipe-macro"><div class="recipe-macro-val">Low</div><div class="recipe-macro-label">fat</div></div>
-        </div>
+        <p>Grill or pressure cook 1–1.5 kg chicken breast using ginger, garlic, turmeric, cumin, and coriander with minimal oil.</p>
       </div>
     </div>
-
-    <div class="recipe-card" onclick="openRecipe('r2')">
+    <div class="recipe-card" onclick="openRecipe('m2')">
       <div class="recipe-top">
-        <div class="recipe-emoji">🐟</div>
-        <div class="recipe-name">Steamed Spice Fish</div>
-        <div class="recipe-tag">Rui / Pangaash / Tilapia</div>
+        <div class="recipe-emoji">🥚</div>
+        <div class="recipe-name">Egg Boiler Tactics</div>
+        <div class="recipe-tag">Snack Fast</div>
       </div>
       <div class="recipe-body">
-        <h4>Why it works</h4>
-        <p>Fish is lower fat than chicken. Steaming keeps all the protein and loses none of the flavour with the right spices.</p>
-        <div class="recipe-macros">
-          <div class="recipe-macro"><div class="recipe-macro-val">220</div><div class="recipe-macro-label">kcal</div></div>
-          <div class="recipe-macro"><div class="recipe-macro-val">38g</div><div class="recipe-macro-label">protein</div></div>
-          <div class="recipe-macro"><div class="recipe-macro-val">Low</div><div class="recipe-macro-label">fat</div></div>
-        </div>
+        <p>Boil 12–18 eggs simultaneously every 3 days. Instantly secures your mid-morning and evening snack requirements.</p>
       </div>
     </div>
-
-    <div class="recipe-card" onclick="openRecipe('r3')">
-      <div class="recipe-top">
-        <div class="recipe-emoji">🥗</div>
-        <div class="recipe-name">Deshi Salad Bowl</div>
-        <div class="recipe-tag">Cucumber · Tomato · Onion</div>
-      </div>
-      <div class="recipe-body">
-        <h4>Why it works</h4>
-        <p>Eat a big salad before your chicken/fish every lunch. It fills you up, adds fibre, and means you eat less rice automatically.</p>
-        <div class="recipe-macros">
-          <div class="recipe-macro"><div class="recipe-macro-val">60</div><div class="recipe-macro-label">kcal</div></div>
-          <div class="recipe-macro"><div class="recipe-macro-val">2g</div><div class="recipe-macro-label">protein</div></div>
-          <div class="recipe-macro"><div class="recipe-macro-val">Zero</div><div class="recipe-macro-label">fat</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="recipe-card" onclick="openRecipe('r4')">
-      <div class="recipe-top">
-        <div class="recipe-emoji">🍲</div>
-        <div class="recipe-name">High Protein Dal</div>
-        <div class="recipe-tag">Masoor / Mung Dal</div>
-      </div>
-      <div class="recipe-body">
-        <h4>Why it works</h4>
-        <p>Dal has 9g protein per cup at almost zero cost. Add it to every meal. It also keeps you full for hours and stops cravings.</p>
-        <div class="recipe-macros">
-          <div class="recipe-macro"><div class="recipe-macro-val">180</div><div class="recipe-macro-label">kcal</div></div>
-          <div class="recipe-macro"><div class="recipe-macro-val">12g</div><div class="recipe-macro-label">protein</div></div>
-          <div class="recipe-macro"><div class="recipe-macro-val">Low</div><div class="recipe-macro-label">fat</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="recipe-card" onclick="openRecipe('r5')">
-      <div class="recipe-top">
-        <div class="recipe-emoji">🍗</div>
-        <div class="recipe-name">Lemon Pepper Grilled Chicken</div>
-        <div class="recipe-tag">Change of Taste</div>
-      </div>
-      <div class="recipe-body">
-        <h4>Why it works</h4>
-        <p>When you're bored of your usual recipe, this keeps it interesting. Different spice mix, grilled not fried, still high protein.</p>
-        <div class="recipe-macros">
-          <div class="recipe-macro"><div class="recipe-macro-val">260</div><div class="recipe-macro-label">kcal</div></div>
-          <div class="recipe-macro"><div class="recipe-macro-val">40g</div><div class="recipe-macro-label">protein</div></div>
-          <div class="recipe-macro"><div class="recipe-macro-val">Low</div><div class="recipe-macro-label">fat</div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="recipe-card" onclick="openRecipe('r6')">
-      <div class="recipe-top">
-        <div class="recipe-emoji">🐠</div>
-        <div class="recipe-name">Mustard Fish Curry (Light)</div>
-        <div class="recipe-tag">Traditional — Fat Loss Version</div>
-      </div>
-      <div class="recipe-body">
-        <h4>Why it works</h4>
-        <p>Traditional Bangladeshi mustard fish — but made with 1 tsp oil only. Full flavour, half the calories. Goes well with a small portion of rice.</p>
-        <div class="recipe-macros">
-          <div class="recipe-macro"><div class="recipe-macro-val">240</div><div class="recipe-macro-label">kcal</div></div>
-          <div class="recipe-macro"><div class="recipe-macro-val">35g</div><div class="recipe-macro-label">protein</div></div>
-          <div class="recipe-macro"><div class="recipe-macro-val">Low</div><div class="recipe-macro-label">fat</div></div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- TIMELINE -->
-<div class="section" id="timeline">
-  <p class="eyebrow">Progress Forecast</p>
-  <h2 class="section-title">Your Journey<br>Month by Month</h2>
-  <div class="tl-cards fade-up">
-    <div class="tl-card">
-      <div class="tl-arrow">📍</div>
-      <div class="tl-month">Start</div>
-      <div class="tl-weight">105 kg</div>
-      <div class="tl-desc">Begin everything. First 2 weeks is mostly water weight. Don't be discouraged.</div>
-    </div>
-    <div class="tl-card">
-      <div class="tl-arrow">📉</div>
-      <div class="tl-month">Month 1</div>
-      <div class="tl-weight">~99 kg</div>
-      <div class="tl-desc">Body adapts. Strength increases fast. Expect 4–6 kg loss. Clothes start feeling different.</div>
-    </div>
-    <div class="tl-card">
-      <div class="tl-arrow">🔥</div>
-      <div class="tl-month">Month 2</div>
-      <div class="tl-weight">~93 kg</div>
-      <div class="tl-desc">Real fat loss kicks in. Face, neck, waist show visible change. Cardio gets easier.</div>
-    </div>
-    <div class="tl-card">
-      <div class="tl-arrow">💪</div>
-      <div class="tl-month">Month 3</div>
-      <div class="tl-weight">~89 kg</div>
-      <div class="tl-desc">Muscle becomes visible. Face looks sharper. Energy levels are high. 4–5 kg loss.</div>
-    </div>
-    <div class="tl-card">
-      <div class="tl-arrow">✅</div>
-      <div class="tl-month">Month 4</div>
-      <div class="tl-weight">≤ 88 kg</div>
-      <div class="tl-desc">Goal reached. Significantly leaner, stronger, fitter. Now push for muscle phase.</div>
-    </div>
-  </div>
-  <div style="margin-top:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.5rem;font-size:14px;color:var(--muted);line-height:1.8;">
-    <strong style="color:var(--accent2);">Your biggest secret weapon:</strong> You're 16. Your testosterone and growth hormone are naturally at the highest point of your entire life. Your body responds to training FASTER than any adult. Stay consistent for 4 months and the transformation will shock you.
+<div class="section" id="tracker">
+  <p class="eyebrow">Data Driven Evolution</p>
+  <h2 class="section-title">Weekly Operational Progress Tracker</h2>
+  <p style="color:var(--muted); font-size:14px;">Log scales once per week upon waking up. Audit spatial structural tape lines (waist, chest, hips) every 2 weeks without fail.</p>
+  
+  <div class="tracker-table-container">
+    <table class="tracker-table">
+      <thead>
+        <tr>
+          <th>Week</th>
+          <th>Weight (kg)</th>
+          <th>Waist (cm)</th>
+          <th>Chest (cm)</th>
+          <th>Hips (cm)</th>
+          <th>Push-ups Max</th>
+          <th>Plank Max</th>
+          <th>Notes / Milestones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Week 1</td><td>110</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>Initial tracking baseline</td>
+        <tr><td>Week 2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Week 3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Week 4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Week 5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Week 6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Week 7</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Week 8</td><td></td><td></td><td></td><td></td><td></td><td></td><td>Complete mid-review Check</td></tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
-<footer>SABBIR'S FAT LOSS PLAN · 105 KG → UNDER 90 KG · 6 DAYS A WEEK</footer>
+<div class="divider"></div>
 
-<!-- MODALS -->
+<div class="section" id="timeline">
+  <p class="eyebrow">Strategic Horizon</p>
+  <h2 class="section-title">Weight Milestones & Action Focus</h2>
+  <div class="tl-cards">
+    <div class="tl-card">
+      <div class="tl-month">Tier 1</div>
+      <div class="tl-weight">110 kg</div>
+      <div class="tl-desc">Master functional movement habits, nail nutritional patterns.</div>
+    </div>
+    <div class="tl-card">
+      <div class="tl-month">Tier 2</div>
+      <div class="tl-weight">105 kg</div>
+      <div class="tl-desc">Aerobic stamina growth. Step targets hit without physical push back.</div>
+    </div>
+    <div class="tl-card">
+      <div class="tl-month">Tier 3</div>
+      <div class="tl-weight">100 kg</div>
+      <div class="tl-desc">Shift movement gears up. Migrate to steeper incline / knee push-up mechanics.</div>
+    </div>
+    <div class="tl-card">
+      <div class="tl-month">Tier 4</div>
+      <div class="tl-weight">95 kg</div>
+      <div class="tl-desc">Lock core endurance tight. Advance down the bodyweight squat tier lines.</div>
+    </div>
+    <div class="tl-card">
+      <div class="tl-month">Tier 5</div>
+      <div class="tl-weight">90 kg</div>
+      <div class="tl-desc">Daily energy thresholds spike. General mobility feels noticeably light.</div>
+    </div>
+    <div class="tl-card">
+      <div class="tl-month">Target</div>
+      <div class="tl-weight">85 kg</div>
+      <div class="tl-desc">Maintain high density conditioning. Evaluate lean structural definition.</div>
+    </div>
+  </div>
+</div>
+
+<footer>SABBIR'S FAT LOSS & SKIN MANAGEMENT BLUEPRINT · 110 KG → 85 KG</footer>
+
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
   <div class="modal" id="modal-box">
     <div class="modal-header">
-      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-title" id="modal-title">Prep Guide</div>
       <div class="modal-close" onclick="closeAllModals()">✕</div>
     </div>
     <div class="modal-body" id="modal-body"></div>
@@ -921,104 +805,14 @@ footer { text-align:center; padding:3rem 2rem; border-top:1px solid var(--border
 </div>
 
 <script>
-const recipes = {
-  r1: {
-    title: '🍗 Spiced Boiled Chicken (Optimised)',
-    body: `
-      <div class="modal-section-title">Ingredients (3 pieces)</div>
-      <ul><li>3 pieces chicken (thighs or drumsticks)</li><li>1 tsp mustard oil only (not more)</li><li>1 tsp garlic paste</li><li>1 tsp ginger paste</li><li>½ tsp black pepper</li><li>½ tsp turmeric</li><li>1 tsp chili powder (adjust to taste)</li><li>Salt to taste</li><li>Juice of ½ lemon</li></ul>
-      <div class="modal-section-title">Method</div>
-      <ol><li>Boil chicken in water with salt, turmeric, and ginger for 20–25 minutes until fully cooked</li><li>Remove chicken, pat dry with tissue</li><li>Mix garlic paste, chili powder, black pepper, lemon juice, 1 tsp oil into a paste</li><li>Rub the paste all over the chicken pieces</li><li>Heat a non-stick pan — no extra oil. Fry chicken 2–3 minutes each side until paste is golden and slightly charred</li><li>Serve with salad and ½ cup rice or 1 roti</li></ol>
-      <div class="modal-section-title">Fat Loss Tip</div>
-      <p>The 1 tsp oil gives enough flavour. The lemon juice adds sharpness that tricks your taste buds into thinking it's richer than it is. Remove skin before cooking to save 80 more calories.</p>
-      <div class="modal-macro-row">
-        <div class="modal-macro"><div class="modal-macro-val">280</div><div class="modal-macro-label">kcal</div></div>
-        <div class="modal-macro"><div class="modal-macro-val">42g</div><div class="modal-macro-label">protein</div></div>
-        <div class="modal-macro"><div class="modal-macro-val">8g</div><div class="modal-macro-label">fat</div></div>
-      </div>
-    `
+const recipeData = {
+  m1: {
+    title: "🍗 Bulk Spiced Chicken Instructions",
+    body: "<p>Weigh out 1–1.5 kg chicken breast meat pieces cleanly. Season uniformly with coarse salt, minced garlic, raw ginger mash, turmeric powder, ground cumin, and red chili flakes. Cook inside a covered skillet or pressure cooker pot with a tiny spray of high-quality cooking oil until fully fork tender. Portion equally into daily containers for quick access during busy lunch hours.</p>"
   },
-  r2: {
-    title: '🐟 Steamed Spice Fish',
-    body: `
-      <div class="modal-section-title">Ingredients (200g fish)</div>
-      <ul><li>200g fish — rui, tilapia, or pangaash work best</li><li>1 tsp garlic paste</li><li>½ tsp ginger paste</li><li>½ tsp turmeric</li><li>½ tsp chili powder</li><li>Salt to taste</li><li>2–3 green chili (optional)</li><li>Fresh coriander leaves</li></ul>
-      <div class="modal-section-title">Method</div>
-      <ol><li>Clean fish thoroughly, make 2–3 diagonal cuts on each side</li><li>Mix garlic, ginger, turmeric, chili, salt into a paste</li><li>Rub the paste all over fish including inside the cuts</li><li>Leave to marinate for 15–20 minutes if you have time</li><li>Place fish in a steamer or a covered pan with 2–3 tbsp water and green chili</li><li>Steam/cook covered on low heat for 12–15 minutes until fully cooked</li><li>Finish with fresh coriander leaves and a squeeze of lemon</li></ol>
-      <div class="modal-section-title">Why Steam?</div>
-      <p>Steaming uses zero oil and keeps 100% of the protein. The spice paste gives full flavour without needing any fat to cook. Fish cooks fast — don't overcook or it becomes dry.</p>
-      <div class="modal-macro-row">
-        <div class="modal-macro"><div class="modal-macro-val">220</div><div class="modal-macro-label">kcal</div></div>
-        <div class="modal-macro"><div class="modal-macro-val">38g</div><div class="modal-macro-label">protein</div></div>
-        <div class="modal-macro"><div class="modal-macro-val">5g</div><div class="modal-macro-label">fat</div></div>
-      </div>
-    `
-  },
-  r3: {
-    title: '🥗 Deshi Salad Bowl',
-    body: `
-      <div class="modal-section-title">Ingredients</div>
-      <ul><li>1 cucumber — sliced thin or diced</li><li>2 medium tomatoes — chopped</li><li>1 small onion — thin rings</li><li>2–3 green chili — chopped (optional)</li><li>Fresh coriander / dhania leaves</li><li>Juice of 1 lemon</li><li>¼ tsp black pepper</li><li>Salt to taste</li></ul>
-      <div class="modal-section-title">Method</div>
-      <ol><li>Chop all vegetables into bite-size pieces</li><li>Mix together in a bowl</li><li>Add lemon juice, black pepper, salt</li><li>Toss well and let it sit 5 minutes before eating</li><li>Eat this BEFORE your chicken or fish every lunch</li></ol>
-      <div class="modal-section-title">Variety Options</div>
-      <ul><li><strong>Add cabbage</strong> (thinly shredded) — very filling, almost zero calories</li><li><strong>Add boiled egg</strong> — turns it into a protein salad</li><li><strong>Add carrot</strong> (grated) — adds sweetness and fibre</li><li><strong>Add green mango</strong> (kacha aam) — sour taste, great in summer</li></ul>
-      <div class="modal-section-title">Why Eat Salad First?</div>
-      <p>Eating salad before your main meal fills your stomach with almost zero calories. You naturally eat less rice and less chicken — but feel just as full. This one habit can save you 150–200 calories every single day.</p>
-      <div class="modal-macro-row">
-        <div class="modal-macro"><div class="modal-macro-val">60</div><div class="modal-macro-label">kcal</div></div>
-        <div class="modal-macro"><div class="modal-macro-val">2g</div><div class="modal-macro-label">protein</div></div>
-        <div class="modal-macro"><div class="modal-macro-val">Zero</div><div class="modal-macro-label">fat</div></div>
-      </div>
-    `
-  },
-  r4: {
-    title: '🍲 High Protein Dal',
-    body: `
-      <div class="modal-section-title">Ingredients (2 servings)</div>
-      <ul><li>1 cup masoor dal or mung dal</li><li>1 small onion — chopped</li><li>1 tsp garlic paste</li><li>½ tsp turmeric</li><li>½ tsp cumin seeds</li><li>1 tsp mustard oil</li><li>Salt and green chili to taste</li><li>Fresh coriander leaves</li></ul>
-      <div class="modal-section-title">Method</div>
-      <ol><li>Wash dal thoroughly, boil in 2.5 cups water with turmeric and salt until soft (~20 min)</li><li>In a separate small pan, heat 1 tsp mustard oil</li><li>Add cumin seeds — they should splutter</li><li>Add onion, fry 2 minutes until golden</li><li>Add garlic paste, stir 30 seconds</li><li>Pour this temper into the boiled dal, stir well</li><li>Add green chili and coriander, serve hot</li></ol>
-      <div class="modal-section-title">Dal Varieties</div>
-      <ul><li><strong>Masoor dal</strong> — fastest to cook, highest protein</li><li><strong>Mung dal</strong> — lighter, easier to digest, good for dinner</li><li><strong>Chana dal</strong> — thicker, more filling, good at lunch</li></ul>
-      <div class="modal-macro-row">
-        <div class="modal-macro"><div class="modal-macro-val">180</div><div class="modal-macro-label">kcal</div></div>
-        <div class="modal-macro"><div class="modal-macro-val">12g</div><div class="modal-macro-label">protein</div></div>
-        <div class="modal-macro"><div class="modal-macro-val">Low</div><div class="modal-macro-label">fat</div></div>
-      </div>
-    `
-  },
-  r5: {
-    title: '🍗 Lemon Pepper Grilled Chicken',
-    body: `
-      <div class="modal-section-title">Ingredients (3 pieces)</div>
-      <ul><li>3 chicken pieces</li><li>Juice of 1 full lemon</li><li>1 tsp black pepper (generous)</li><li>½ tsp garlic powder or fresh garlic paste</li><li>½ tsp paprika or chili powder</li><li>½ tsp salt</li><li>1 tsp mustard oil</li></ul>
-      <div class="modal-section-title">Method</div>
-      <ol><li>Score chicken pieces with 3–4 deep cuts</li><li>Mix lemon juice, black pepper, garlic, paprika, oil, salt into a marinade</li><li>Coat chicken well, push into the cuts. Marinate minimum 30 minutes (overnight is best)</li><li>Cook in a non-stick pan on medium heat, covered, 7–8 min per side</li><li>OR put in oven at 200°C for 25–30 minutes if available</li><li>Serve with salad — no rice needed, it's filling enough</li></ol>
-      <div class="modal-section-title">Why This Works</div>
-      <p>The lemon acid tenderises the chicken naturally. The black pepper gives heat without adding calories. This is a great change from your usual recipe when you're bored — same macros, different taste.</p>
-      <div class="modal-macro-row">
-        <div class="modal-macro"><div class="modal-macro-val">260</div><div class="modal-macro-label">kcal</div></div>
-        <div class="modal-macro"><div class="modal-macro-val">40g</div><div class="modal-macro-label">protein</div></div>
-        <div class="modal-macro"><div class="modal-macro-val">7g</div><div class="modal-macro-label">fat</div></div>
-      </div>
-    `
-  },
-  r6: {
-    title: '🐠 Mustard Fish Curry (Light Version)',
-    body: `
-      <div class="modal-section-title">Ingredients (200g fish)</div>
-      <ul><li>200g fish (rui or hilsa work best)</li><li>1 tsp mustard seeds — ground into paste with water</li><li>1 tsp mustard oil (only 1 tsp!)</li><li>½ tsp turmeric</li><li>½ tsp chili powder</li><li>3–4 green chili (slit)</li><li>Salt to taste</li><li>½ cup water</li></ul>
-      <div class="modal-section-title">Method</div>
-      <ol><li>Rub fish with turmeric and salt, set aside 10 minutes</li><li>Grind mustard seeds with a little water and pinch of salt into a smooth paste</li><li>Heat 1 tsp mustard oil in pan until slightly smoking</li><li>Add mustard paste carefully (it will splutter), stir 30 seconds</li><li>Add chili powder, green chili, and ½ cup water</li><li>Add fish pieces gently, spoon sauce over them</li><li>Cover and cook on low heat 10–12 minutes</li><li>Taste for salt, serve immediately</li></ol>
-      <div class="modal-section-title">Fat Loss Version vs Traditional</div>
-      <p>Traditional shorshe ilish uses 3–4 tbsp mustard oil. This version uses 1 tsp. You save over 300 calories but keep 95% of the flavour because the mustard seed paste itself carries all the flavour — the extra oil was never necessary.</p>
-      <div class="modal-macro-row">
-        <div class="modal-macro"><div class="modal-macro-val">240</div><div class="modal-macro-label">kcal</div></div>
-        <div class="modal-macro"><div class="modal-macro-val">35g</div><div class="modal-macro-label">protein</div></div>
-        <div class="modal-macro"><div class="modal-macro-val">9g</div><div class="modal-macro-label">fat</div></div>
-      </div>
-    `
+  m2: {
+    title: "🥚 Hard Boiled Mass Prep",
+    body: "<p>Submerge 12–18 farm fresh eggs completely inside cold unsalted water. Bring water up to a rapid rolling boil phase, then turn down heat setting to a medium simmer for exactly 9–10 minutes. Immediately plunge directly inside an iced clean water bath bowl to lock mechanical structure and separate shells cleanly. Keep chilled in your refrigerator system for grab-and-go snack options.</p>"
   }
 };
 
@@ -1040,9 +834,9 @@ function toggleMeal(header) {
 }
 
 function openRecipe(id) {
-  const r = recipes[id];
-  document.getElementById('modal-title').textContent = r.title;
-  document.getElementById('modal-body').innerHTML = r.body;
+  const data = recipeData[id];
+  document.getElementById('modal-title').textContent = data.title;
+  document.getElementById('modal-body').innerHTML = data.body;
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1060,24 +854,11 @@ function scrollTo(id) {
   document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
 }
 
-// Scroll fade
+// Scroll fade observer
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-
-// Nav active
-const sections = ['cardio','workout','nutrition','recipes','timeline'];
-const navLinks = document.querySelectorAll('.nav-link');
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(id => {
-    const el = document.getElementById(id);
-    if (el && window.scrollY >= el.offsetTop - 100) current = id;
-  });
-  navLinks.forEach(l => l.classList.remove('active'));
-  navLinks.forEach(l => { if (l.getAttribute('onclick') && l.getAttribute('onclick').includes(current)) l.classList.add('active'); });
-});
 </script>
 </body>
 </html>
